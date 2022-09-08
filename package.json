@@ -1,5 +1,5 @@
 {
-  "name": "image-uploader",
+  "name": "image-uploader-api",
   "version": "0.2.0",
   "main": "index.js",
   "license": "MIT",
