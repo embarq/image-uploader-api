@@ -1,7 +1,15 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../lib/db'
 
-class ImageModel extends Model {
+export interface AppImage {
+  id: number
+  url: string
+  name: string
+  created_at: number
+  updated_at: number
+}
+
+class ImageModel extends Model implements AppImage {
   declare id: number
   declare url: string
   declare name: string
@@ -42,18 +50,18 @@ ImageModel.init(
   }
 )
 
-export const create = async (payload: Pick<ImageModel, 'name' | 'url'>) => {
+export const create = async (payload: Pick<AppImage, 'name' | 'url'>) => {
   const instance = await ImageModel.create(payload)
   const data = await instance.save()
   return data.get({ plain: true })
 }
 
-export const findOneByName = async (name: string) => {
+export const findOneByName = async (name: string): Promise<AppImage | void> => {
   const instance = await ImageModel.findOne({
     where: {
       name
     }
   })
 
-  return instance?.toJSON<ImageModel>()
+  return instance?.toJSON<AppImage>()
 }
