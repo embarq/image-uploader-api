@@ -4,4 +4,4 @@ import { AppContext } from './model'
 
 export const router = new Router<unknown, AppContext>()
 
-router.post('/upload/image', handleImageUpload)
+router.post('/image/upload', handleImageUpload)
