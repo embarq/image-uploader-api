@@ -7,7 +7,10 @@ import { router } from './router'
 export const app = new Koa()
 
 app.use(logger())
-app.use(koaBody({ multipart: true }))
+app.use(koaBody({
+  multipart: true,
+  text: false,
+}))
 app.use(router.routes())
 
 const httpServer = createServer(app.callback())
