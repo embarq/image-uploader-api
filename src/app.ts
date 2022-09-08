@@ -2,6 +2,7 @@ import { createServer, Server } from 'http'
 import Koa from 'koa'
 import koaBody from 'koa-body'
 import logger from 'koa-logger'
+import * as db from './lib/db'
 import { router } from './router'
 
 export const app = new Koa()
@@ -20,8 +21,10 @@ export interface StartResult {
   stop: () => Promise<void>
 }
 
-export const start = (): Promise<StartResult> => {
+export const start = async (): Promise<StartResult> => {
   const port = process.env.PORT
+
+  await db.init()
 
   return new Promise((resolve) => {
     httpServer.listen(process.env.PORT, () => {
@@ -30,7 +33,7 @@ export const start = (): Promise<StartResult> => {
         server: httpServer,
         stop: () => {
           console.log('App cleanup before exit')
-          return Promise.resolve()
+          return db.close()
         }
       })
     })
