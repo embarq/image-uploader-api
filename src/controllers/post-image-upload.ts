@@ -5,6 +5,9 @@ import { randomBytes } from 'crypto'
 import { Context } from 'koa'
 import { s3Client } from '../lib/storage'
 import { Upload } from '@aws-sdk/lib-storage'
+import * as imageEntity from '../entities/image'
+import { CompleteMultipartUploadOutput } from '@aws-sdk/client-s3'
+import assert from 'assert'
 
 export const handleImageUpload = async (ctx: Context) => {
   if (ctx.request.files == null) {
@@ -66,12 +69,22 @@ export const handleImageUpload = async (ctx: Context) => {
     },
   })
 
+
   try {
-    const res = await upload.done()
+    const res: CompleteMultipartUploadOutput = await upload.done()
+
+    assert(res.Location)
+
+    const data = await imageEntity.create({
+      name: distFileName,
+      url: res.Location,
+    })
 
     ctx.body = {
       status: 'success',
-      payload: { }
+      payload: {
+        ...data
+      },
     }
   } catch (error) {
     console.error(error);
