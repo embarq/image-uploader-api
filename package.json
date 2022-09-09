@@ -7,7 +7,7 @@
     "node": ">=14"
   },
   "scripts": {
-    "start": "node dist node --nouse-idle-notification --expose-gc --max-old-space-size=512 --report-uncaught-exception --report-on-signal --report-on-fatalerror",
+    "start": "node dist --nouse-idle-notification --expose-gc --max-old-space-size=512 --report-uncaught-exception --report-on-signal --report-on-fatalerror",
     "build": "npx tsc --noemit false",
     "dev": "NODE_ENV=development nodemon --watch './src/**/*.ts' -e ts --exec 'ts-node' src"
   },
