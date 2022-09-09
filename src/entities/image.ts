@@ -53,7 +53,7 @@ ImageModel.init(
 export const create = async (payload: Pick<AppImage, 'name' | 'url'>) => {
   const instance = await ImageModel.create(payload)
   const data = await instance.save()
-  return data.get({ plain: true })
+  return data.get({ plain: true }) as AppImage
 }
 
 export const findOneByName = async (name: string): Promise<AppImage | void> => {
