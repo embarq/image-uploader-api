@@ -2,6 +2,7 @@ import { createServer, Server } from 'http'
 import Koa from 'koa'
 import koaBody from 'koa-body'
 import logger from 'koa-logger'
+import cors from '@koa/cors'
 import * as db from './lib/db'
 import { router } from './router'
 
@@ -12,6 +13,7 @@ app.use(koaBody({
   multipart: true,
   text: false,
 }))
+app.use(cors())
 app.use(router.routes())
 
 const httpServer = createServer(app.callback())
