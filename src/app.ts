@@ -5,6 +5,7 @@ import logger from 'koa-logger'
 import cors from '@koa/cors'
 import * as db from './lib/db'
 import { router } from './router'
+import * as accessTokenStore from './lib/access-token-store'
 
 export const app = new Koa()
 
@@ -25,6 +26,7 @@ export interface StartResult {
 
 export const start = async (): Promise<StartResult> => {
   const port = process.env.PORT
+  const stopPeriodicCheck = accessTokenStore.startPeriodicCheck()
 
   await db.init()
 
@@ -35,6 +37,7 @@ export const start = async (): Promise<StartResult> => {
         server: httpServer,
         stop: () => {
           console.log('App cleanup before exit')
+          stopPeriodicCheck()
           return db.close()
         }
       })
