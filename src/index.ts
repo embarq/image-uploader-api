@@ -1,5 +1,7 @@
 import * as dotenv from 'dotenv'
-dotenv.config()
+dotenv.config({
+  path: '/etc/secrets/.env'
+})
 
 import { app, start, StartResult } from './app'
 
