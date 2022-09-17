@@ -8,17 +8,12 @@ export const tempAuthMiddleware = async (ctx: Context, next: Next) => {
     ctx.throw(401)
   }
 
-  try {
-    const tempTokenEntry = await accessTokenStore.get(tempToken)
+  const tempTokenEntry = await accessTokenStore.get(tempToken)
 
-    if (tempTokenEntry != null && !accessTokenStore.isExpired(tempTokenEntry)) {
-      next()
-      return
-    }
-
-    ctx.throw(401)
-  } catch (error) {
-    console.error(error)
-    ctx.throw(500)
+  if (tempTokenEntry != null && !accessTokenStore.isExpired(tempTokenEntry)) {
+    next()
+    return
   }
+
+  ctx.throw(401)
 }
