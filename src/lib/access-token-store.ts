@@ -20,7 +20,6 @@ export const create = ({ clientIP }: Pick<TempAccessToken, 'clientIP'>): Promise
     clientIP,
     createdAt: Date.now(),
   }
-  console.debug(payload, [...store.values()])
   store.set(value, payload)
   return Promise.resolve(payload)
 }
