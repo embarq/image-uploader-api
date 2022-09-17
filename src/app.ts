@@ -6,7 +6,6 @@ import cors from '@koa/cors'
 import * as db from './lib/db'
 import { router } from './router'
 import * as accessTokenStore from './lib/access-token-store'
-import { version } from '../package.json'
 
 export const app = new Koa()
 
@@ -33,7 +32,7 @@ export const start = async (): Promise<StartResult> => {
 
   return new Promise((resolve) => {
     httpServer.listen(process.env.PORT, () => {
-      console.log('App started on port', port, version)
+      console.log('App started on port', port)
       resolve({
         server: httpServer,
         stop: () => {
