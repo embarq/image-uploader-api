@@ -36,6 +36,7 @@ export const remove = (value: TempAccessTokenStoreKey): Promise<void> => {
 }
 
 export const isExpired = (token: TempAccessToken) => {
+  console.debug('AccessTokenStore.isExpired', token, TEMP_TOKEN_TTL, (Date.now() - token.createdAt) >= TEMP_TOKEN_TTL)
   return (Date.now() - token.createdAt) >= TEMP_TOKEN_TTL
 }
 
