@@ -4,7 +4,6 @@ import * as accessTokenStore from '../lib/access-token-store'
 import { ReCaptchaSiteVerifyResponse } from '../model/vendor'
 
 export const handleValidateRecaptcha = async (ctx: Context) => {
-  console.log('process.env.RECAPTCHA_SECRET_KEY', process.env.RECAPTCHA_SECRET_KEY)
   const res = await got
     .post('https://www.google.com/recaptcha/api/siteverify', {
       json: {
