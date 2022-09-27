@@ -7,11 +7,7 @@ export const handleGetImage = async (ctx: Context) => {
   const data = await imageEntity.findOneByName(encodeURI(ctx.params.name))
 
   if (data == null) {
-    ctx.status = 404
-    ctx.body = {
-      status: 'error',
-      code: 'entity_not_found',
-    }
+    ctx.throw(404)
     return
   }
 
@@ -23,10 +19,6 @@ export const handleGetImage = async (ctx: Context) => {
     ctx.body = res
   } catch (error) {
     console.error(error);
-    ctx.status = 500
-    ctx.body = {
-      status: 'error',
-      code: 'unknown'
-    }
+    ctx.throw(500)
   }
 }

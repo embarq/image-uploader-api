@@ -13,10 +13,5 @@ export const tempAuthMiddleware = async (ctx: Context, next: Next) => {
     }
   }
 
-  ctx.status = 400
-  ctx.body = {
-    status: 'error',
-    code: 'auth_required',
-  }
-  next()
+  ctx.throw(401)
 }

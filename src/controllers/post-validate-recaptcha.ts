@@ -15,15 +15,7 @@ export const handleValidateRecaptcha = async (ctx: Context) => {
     .json<ReCaptchaSiteVerifyResponse>()
 
   if (!res.success) {
-    console.error(res)
-    ctx.status = 400
-    ctx.body = {
-      status: 'error',
-      payload: {
-        code: res['error-codes'],
-      }
-    }
-    return
+    ctx.throw(400, `failed_captcha_validation: ${ res['error-codes'] }`)
   }
 
   const token = await accessTokenStore.create({ clientIP: ctx.request.ip })

@@ -5,23 +5,13 @@ import * as imageEntity from '../entities/image'
 
 export const handleImageUpload = async (ctx: Context) => {
   if (ctx.request.files == null) {
-    ctx.status = 400
-    ctx.body = {
-      status: 'error',
-      code: 'invalid_request'
-    }
-    return
+    ctx.throw(400, 'missing_file')
   }
 
   const files = ctx.request.files.files
 
   if (Array.isArray(files) && files.length > 1) {
-    ctx.status = 400
-    ctx.body = {
-      status: 'error',
-      code: 'file_upload_limit_exceeded'
-    }
-    return
+    ctx.throw(400, 'file_upload_limit_exceeded')
   }
 
   const file = Array.isArray(files) ? files[0] : files
@@ -33,16 +23,7 @@ export const handleImageUpload = async (ctx: Context) => {
   ]
 
   if (!ALLOWED_IMAGE_TYPES.includes(file.mimetype!)) {
-    ctx.status = 400
-    ctx.body = {
-      status: 'error',
-      code: 'file_upload_invalid_file_type',
-      detail: {
-        src_file_name: file.originalFilename,
-        src_file_type: file.mimetype,
-      }
-    }
-    return
+    ctx.throw(400, 'file_upload_invalid_file_type')
   }
 
   try {
@@ -63,10 +44,6 @@ export const handleImageUpload = async (ctx: Context) => {
     }
   } catch (error) {
     console.error(error);
-    ctx.status = 500
-    ctx.body = {
-      status: 'error',
-      code: 'unknown'
-    }
+    ctx.throw(500)
   }
 }
