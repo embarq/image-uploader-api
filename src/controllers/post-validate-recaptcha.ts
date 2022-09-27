@@ -29,7 +29,7 @@ export const handleValidateRecaptcha = async (ctx: Context) => {
   const token = await accessTokenStore.create({ clientIP: ctx.request.ip })
 
   ctx.body = {
-    status: res.success ? 'success' : 'error',
+    status: 'success',
     payload: {
       temp_token: token.value
     }
