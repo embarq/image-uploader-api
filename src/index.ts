@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 dotenv.config({
-  path: process.env.RENDER ? '/etc/secrets/.env' : '../.env'
+  path: process.env.RENDER ? '/etc/secrets/.env' : '.env'
 })
 
 import { app, start, StartResult } from './app'
