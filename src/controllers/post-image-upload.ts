@@ -36,6 +36,8 @@ export const handleImageUpload = async (ctx: Context) => {
       url,
     })
 
+    console.log('dbwrite', data)
+
     ctx.body = {
       status: 'success',
       payload: {
