@@ -8,8 +8,7 @@ export const tempAuthMiddleware = async (ctx: Context, next: Next) => {
     const tempTokenEntry = await accessTokenStore.get(tempToken)
 
     if (tempTokenEntry != null && !accessTokenStore.isExpired(tempTokenEntry)) {
-      next()
-      return
+      return next()
     }
   }
 
